@@ -1,0 +1,60 @@
+day01  登录/退出功能
+相关技术点：
+  http是无状态的
+  通过cookie在客户端记录状态
+  通过session在服务端记录状态
+  通过token维持状态
+  
+A.登录状态保持
+  如果服务器和客户端同源，建议可以使用cookie或者session来保持登录状态
+  如果客户端和服务器跨域了，建议使用token进行维持登录状态。
+B.登录逻辑：
+  在登录页面输入账号和密码进行登录，将数据发送给服务器
+  服务器返回登录的结果，登录成功则返回数据中带有token
+  客户端得到token并进行保存，后续的请求都需要将此token发送给服务器，服务器会验证token以保证用户身份。
+
+  建议使用分支完成项目
+
+  清空掉views和component文件夹里面的默认内容
+
+  再style中添加scope表示这个样式只对当前组件起作用
+
+
+  注意：
+  在做任何登录功能的时候一定要用到form表单
+  el-form中的lable-width是给文本占位的，改为0就没有了
+
+  给表单绑定数据对象，查看element-ui上form的例子
+
+  表单验证，对input里的值进行验证，同样看form例子
+
+  重置表单，调用form表单api里的resetFields方法重置表单，想要调用方法，就要先获取表单的实例对象
+  通过ref给form表单注册一个引用信息loginFormRef，因为在DOM上使用，所以它指向DOM,且它就是这个表单的实例对象；
+  只要获取到了loginFormRef这个引用，就获取到了表单的实例对象，然后就可以通过它调用resetFeileds方法重置表单
+  想要获取到loginFormRef，就要得到组件的实例对象，也就是this
+  组件的实例对象this中有一个$refs属性，相当于ref的集合，通过它可以获得表单的实例对象，然后再调用resetFeileds方法就可完成表单的重置
+
+  对表单数据预验证
+  点击登录的时候要数据正确才能发起请求，所以要预验证
+  查看form表单api下的validate方法,第一个布尔值参数可使用valide，
+  然后可以进行判断，如果为false，就return，为true，执行下一步操作
+
+  配置axios, 设置基准路径，并将它挂在在Vue的原型对象上，这样全局都可以使用
+  发送请求，传参时，因为表单输入的数据全部会同步在loginForm里面，所以这里可以把这个数据对象传递过去
+  得到的是一个promise对象，可以通过async简化，然后解构，把数据data解构给res，res就是需要的数据
+  最后通过status判断登录状态, 用到message消息提示，引入message，并挂在在vue的原型对象上
+
+  登录成功后将token保存在sessionstorage里，因为token只在当前页面生效
+  使用编程式导航跳到后台主页
+  不能通过输入路径的方式访问home，因为home是需要权限的，所以需要设置路由拦截
+  如果访问的是login，就next，且获取本地token，如果没有，就返回login页面进行登录
+
+  进入后台主页后，设置一个后退按钮，点击后退按钮清除token并且返回login页面
+
+
+
+问题：给login组件设置样式的时候，高度没有百分百
+  解决：创建一个全局样式文件，将html,body 和跟组件app设置高度百分百即可，再在login组件中将盒子高度百分百
+
+问题：新建vue文件后，报错Newline required at end of file but not found，文件末未找到结尾符
+  解决：在style后面加上一行空行

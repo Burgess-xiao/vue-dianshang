@@ -1,0 +1,23 @@
+{
+  "id": "1636452",
+  "name": "电商",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11346894",
+      "name": "头像",
+      "font_class": "touxiang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "12686633",
+      "name": "锁",
+      "font_class": "icon_suo-",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    }
+  ]
+}
